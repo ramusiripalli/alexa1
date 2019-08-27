@@ -21,37 +21,67 @@ paths:
   /login:
     # binds a127 app logic to a route
     x-swagger-router-controller: alexa
-    get:
+    post:
       description: Returns 'Hello' to the caller
       # used as the method name of the controller
       operationId: login
       parameters:
-        - name: name
-          in: query
+        - name: data
+          in: body
           description: The name of the person to whom to say hello
-          required: false
-          type: string
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/loginRequest"
+         
       responses:
         "200":
           description: Success
           schema:
             # a pointer to a definition
-            $ref: "#/definitions/HelloWorldResponse"
+            $ref: "#/definitions/loginResponse"
         # responses may fall through to errors
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /weather:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: alexa
+    get:
+      description: Returns 'Hello' to the caller
+      # used as the method name of the controller
+      operationId: weather
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/weatherResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"          
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
-  HelloWorldResponse:
-    required:
-      - message
+  loginRequest:
+    properties:
+      inputDate:
+        type: string
+  loginResponse:
     properties:
       message:
         type: string
+      status:
+        type: string 
+  weatherResponse:
+    properties:
+      message:
+        type: string
+           
+        
   ErrorResponse:
     required:
       - message
