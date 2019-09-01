@@ -14,12 +14,14 @@ var response = {};
 response.uid = "urn:uuid:" + uuid.v4();
 response.updateDate = new Date();
 response.titleText = "Update For Bangalore Weather";
-response.redirectionUrl = "http://ramusiripalli.xyz";
+
 
   weather1.find({search: 'Bengaluru, KA', degreeType: 'F'}, function(err, result) {
     if(err) {
       response.mainText = "hello from weather. we are facing technical issue right now. please try again sometime";
-    res.json(response);
+      response.redirectionUrl = "http://ramusiripalli.xyz";
+      res.json(response);
+
       console.log(err);}
     else{
 
@@ -33,6 +35,7 @@ response.redirectionUrl = "http://ramusiripalli.xyz";
     console.log("fourth day weather " + day3weather);
     var day4weather = result[0].forecast[4].skytextday;
     console.log("fifth day weather " + day4weather);
+    response.redirectionUrl = "http://ramusiripalli.xyz";
     response.mainText = "Hello from weather. todays weather is expected to be " + day0weather + ".Tomorrows weather will be " +day1weather + ".third day weather will be " + day2weather + " . fourth day weather will be " + day3weather + "fifth day weather will be " + day4weather;
     res.json(response);
     }
